@@ -1,0 +1,60 @@
+TITLE_EN: Sofie at the Lake
+TITLE_NO: Sofie ved innsjøen
+EMOJI: 🏞️
+
+SCENE: The Walk There | Turen dit | 🌿
+EN: Sofie puts on her boots and walks down the hill.
+NO: Sofie tar på seg støvlene og går ned bakken.
+EN: The path goes through a small forest.
+NO: Stien går gjennom en liten skog.
+EN: She can hear the wind in the leaves.
+NO: Hun kan høre vinden i bladene.
+EN: The ground is soft under her feet.
+NO: Bakken er myk under føttene hennes.
+
+SCENE: Arriving at the Lake | Kommer til innsjøen | 💧
+EN: The lake is wide and still.
+NO: Innsjøen er bred og stille.
+EN: The water is dark blue and very clear.
+NO: Vannet er mørkeblått og veldig klart.
+EN: Sofie sits down on a flat rock at the edge.
+NO: Sofie setter seg på en flat stein ved kanten.
+EN: She looks at the mountains on the other side.
+NO: Hun ser på fjellene på den andre siden.
+
+SCENE: By the Water | Ved vannet | 🦆
+EN: Two ducks swim slowly near the shore.
+NO: To ender svømmer sakte nær stranden.
+EN: Sofie throws a small stone and it skips three times.
+NO: Sofie kaster en liten stein og den hopper tre ganger.
+EN: A fish jumps out of the water and falls back in.
+NO: En fisk hopper ut av vannet og faller tilbake.
+EN: She laughs quietly to herself.
+NO: Hun ler stille for seg selv.
+
+SCENE: Going Home | Går hjem | 🌙
+EN: The sun begins to go down behind the mountains.
+NO: Solen begynner å gå ned bak fjellene.
+EN: The sky turns orange and pink.
+NO: Himmelen blir oransje og rosa.
+EN: Sofie stands up and stretches.
+NO: Sofie reiser seg og strekker seg.
+EN: She walks home slowly and feels calm.
+NO: Hun går sakte hjem og føler seg rolig.
+
+VOCAB:
+boots | støvler
+hill | bakke
+forest | skog
+wind | vind
+leaves | blader
+lake | innsjø
+rock | stein
+mountains | fjell
+duck | and
+shore | strand
+fish | fisk
+sun | sol
+sky | himmel
+calm | rolig
+water | vann

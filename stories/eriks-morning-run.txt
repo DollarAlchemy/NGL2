@@ -1,0 +1,58 @@
+TITLE_EN: Erik's Morning Run
+TITLE_NO: Eriks morgentur
+EMOJI: 🏃
+
+SCENE: Getting Ready | Gjør seg klar | 👟
+EN: Erik wakes up early every morning.
+NO: Erik våkner tidlig hver morgen.
+EN: He puts on his running shoes and his blue jacket.
+NO: Han tar på seg løpeskoene og den blå jakken.
+EN: He drinks a glass of water before he goes outside.
+NO: Han drikker et glass vann før han går ut.
+
+SCENE: Out on the Street | Ute på gaten | 🌤️
+EN: Outside, the air is cool and fresh.
+NO: Ute er luften kjølig og frisk.
+EN: Erik starts to run down the quiet street.
+NO: Erik begynner å løpe nedover den stille gaten.
+EN: He passes the bakery and smells fresh bread.
+NO: Han passerer bakeriet og kjenner lukten av ferskt brød.
+EN: A cat sits on a fence and watches him.
+NO: En katt sitter på et gjerde og ser på ham.
+
+SCENE: The Park | Parken | 🌳
+EN: Erik runs into the small park near his house.
+NO: Erik løper inn i den lille parken nær huset hans.
+EN: There are tall trees and a wooden bench.
+NO: Det er høye trær og en tresete benk.
+EN: He stops and breathes slowly.
+NO: Han stopper og puster sakte.
+EN: A bird sings in the tree above him.
+NO: En fugl synger i treet over ham.
+
+SCENE: Back Home | Hjemme igjen | 🚿
+EN: After the run, Erik walks home slowly.
+NO: Etter turen går Erik sakte hjem.
+EN: He takes a shower and puts on clean clothes.
+NO: Han dusjer og tar på seg rene klær.
+EN: Then he makes coffee and sits at the kitchen table.
+NO: Så lager han kaffe og setter seg ved kjøkkenbordet.
+EN: He feels good and ready for the day.
+NO: Han føler seg bra og klar for dagen.
+
+VOCAB:
+run | løpe
+shoes | sko
+jacket | jakke
+water | vann
+street | gate
+bakery | bakeri
+bread | brød
+fence | gjerde
+park | park
+tree | tre
+bench | benk
+bird | fugl
+shower | dusj
+coffee | kaffe
+ready | klar

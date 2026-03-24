@@ -1,0 +1,62 @@
+TITLE_EN: Anna Visits Her Grandmother
+TITLE_NO: Anna besøker bestemoren sin
+EMOJI: 👵
+
+SCENE: The Bus Ride | Bussreisen | 🚌
+EN: Every Sunday, Anna takes the bus to her grandmother's house.
+NO: Hver søndag tar Anna bussen til bestemorens hus.
+EN: The ride takes about twenty minutes.
+NO: Turen tar omtrent tjue minutter.
+EN: Anna looks out of the window at the houses and gardens.
+NO: Anna ser ut av vinduet på husene og hagene.
+EN: She has a small bag of apples for her grandmother.
+NO: Hun har en liten pose med epler til bestemoren.
+
+SCENE: Arriving | Ankommer | 🚪
+EN: Grandmother opens the door before Anna can knock.
+NO: Bestemoren åpner døren før Anna kan banke på.
+EN: She smiles and opens her arms wide.
+NO: Hun smiler og åpner armene sine vidt.
+EN: The house smells like warm cake and coffee.
+NO: Huset lukter som varm kake og kaffe.
+EN: A small grey cat sleeps on the sofa.
+NO: En liten grå katt sover på sofaen.
+
+SCENE: Sitting Together | Sitter sammen | ☕
+EN: They sit at the kitchen table and drink tea.
+NO: De sitter ved kjøkkenbordet og drikker te.
+EN: Grandmother cuts two slices of cake and puts them on plates.
+NO: Bestemoren skjærer to skiver kake og legger dem på tallerkener.
+EN: Anna tells her about school and her friends.
+NO: Anna forteller henne om skolen og vennene sine.
+EN: Grandmother listens and nods slowly.
+NO: Bestemoren lytter og nikker sakte.
+
+SCENE: In the Garden | I hagen | 🌸
+EN: After tea, they walk in the garden together.
+NO: Etter teen går de i hagen sammen.
+EN: Grandmother shows Anna the new flowers by the fence.
+NO: Bestemoren viser Anna de nye blomstene ved gjerdet.
+EN: They are red and yellow and smell very sweet.
+NO: De er røde og gule og lukter veldig søtt.
+EN: Anna picks one and puts it in her hair.
+NO: Anna plukker en og setter den i håret sitt.
+EN: Grandmother laughs and says she looks beautiful.
+NO: Bestemoren ler og sier at hun ser vakker ut.
+
+VOCAB:
+grandmother | bestemor
+bus | buss
+window | vindu
+apples | epler
+door | dør
+cake | kake
+coffee | kaffe
+cat | katt
+sofa | sofa
+tea | te
+school | skole
+friends | venner
+garden | hage
+flowers | blomster
+beautiful | vakker

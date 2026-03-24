@@ -1,0 +1,64 @@
+TITLE_EN: A Picnic in the Mountains
+TITLE_NO: En piknik i fjellet
+EMOJI: 🏔️
+
+SCENE: Packing the Bag | Pakker sekken | 🎒
+EN: It is a sunny Saturday and the family wants to go to the mountains.
+NO: Det er en solrik lørdag og familien vil dra til fjellet.
+EN: Mama packs sandwiches with cheese and tomato.
+NO: Mamma pakker smørbrød med ost og tomat.
+EN: Papa fills a bottle with cold water.
+NO: Pappa fyller en flaske med kaldt vann.
+EN: The children put apples and cookies into the bag.
+NO: Barna legger epler og kjeks i sekken.
+
+SCENE: The Hike Up | Turen opp | 🥾
+EN: The family walks along a narrow path up the mountain.
+NO: Familien går langs en smal sti opp fjellet.
+EN: The path is steep but the view gets better and better.
+NO: Stien er bratt, men utsikten blir bedre og bedre.
+EN: The children run ahead and then wait for their parents.
+NO: Barna løper foran og venter så på foreldrene sine.
+EN: A small stream runs beside the path and the water is ice cold.
+NO: En liten bekk renner ved siden av stien og vannet er iskaldt.
+
+SCENE: Finding a Spot | Finner et sted | 🌄
+EN: Near the top, they find a flat green field.
+NO: Nær toppen finner de en flat grønn eng.
+EN: They can see the whole valley below them.
+NO: De kan se hele dalen under seg.
+EN: Papa spreads a blanket on the grass.
+NO: Pappa bretter ut et teppe på gresset.
+EN: They all sit down and rest.
+NO: De setter seg alle ned og hviler.
+
+SCENE: Eating Together | Spiser sammen | 🥪
+EN: Mama hands out the sandwiches.
+NO: Mamma deler ut smørbrødene.
+EN: Everyone is hungry and eats quickly.
+NO: Alle er sultne og spiser fort.
+EN: The cookies taste extra good in the fresh mountain air.
+NO: Kjeksene smaker ekstra godt i den friske fjellluften.
+EN: After eating, the children lie on the blanket and look at the clouds.
+NO: Etter å ha spist, legger barna seg på teppet og ser på skyene.
+EN: Papa points to one cloud and says it looks like a whale.
+NO: Pappa peker på en sky og sier den ser ut som en hval.
+EN: Everyone laughs.
+NO: Alle ler.
+
+VOCAB:
+mountain | fjell
+family | familie
+sandwich | smørbrød
+cheese | ost
+bottle | flaske
+path | sti
+stream | bekk
+valley | dal
+blanket | teppe
+grass | gress
+hungry | sulten
+clouds | skyer
+whale | hval
+sunny | solrik
+together | sammen

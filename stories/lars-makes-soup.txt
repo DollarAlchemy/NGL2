@@ -1,0 +1,62 @@
+TITLE_EN: Lars Makes Soup
+TITLE_NO: Lars lager suppe
+EMOJI: 🍲
+
+SCENE: At the Market | På markedet | 🧅
+EN: Lars goes to the market on Saturday morning.
+NO: Lars drar til markedet lørdag morgen.
+EN: He needs vegetables for a big pot of soup.
+NO: Han trenger grønnsaker til en stor gryte med suppe.
+EN: He picks up carrots, onions, and potatoes.
+NO: Han tar opp gulrøtter, løk og poteter.
+EN: He also buys a loaf of dark bread.
+NO: Han kjøper også et brød med mørkt brød.
+
+SCENE: In the Kitchen | På kjøkkenet | 🔪
+EN: At home, Lars washes the vegetables.
+NO: Hjemme vasker Lars grønnsakene.
+EN: He peels the potatoes and cuts the carrots.
+NO: Han skreller potetene og skjærer gulrøttene.
+EN: He chops the onion and his eyes start to water.
+NO: Han hakker løken og øynene begynner å renne.
+EN: He puts everything into the big pot.
+NO: Han legger alt i den store gryta.
+
+SCENE: Cooking | Koker | ♨️
+EN: Lars fills the pot with water and turns on the stove.
+NO: Lars fyller gryta med vann og skrur på komfyren.
+EN: He adds salt, pepper, and a little butter.
+NO: Han tilsetter salt, pepper og litt smør.
+EN: The soup bubbles and the kitchen smells wonderful.
+NO: Suppen bobler og kjøkkenet lukter nydelig.
+EN: He stirs slowly and tastes with a spoon.
+NO: Han rører sakte og smaker med en skje.
+
+SCENE: Sitting Down to Eat | Setter seg ned for å spise | 🥣
+EN: After thirty minutes the soup is ready.
+NO: Etter tretti minutter er suppen klar.
+EN: Lars pours it into a deep bowl.
+NO: Lars heller den i en dyp bolle.
+EN: He cuts a thick slice of dark bread.
+NO: Han skjærer en tykk skive mørkt brød.
+EN: He sits by the window and eats slowly.
+NO: Han setter seg ved vinduet og spiser sakte.
+EN: It is the best soup he has ever made.
+NO: Det er den beste suppen han noen gang har laget.
+
+VOCAB:
+market | marked
+vegetables | grønnsaker
+carrots | gulrøtter
+onion | løk
+potatoes | poteter
+bread | brød
+kitchen | kjøkken
+pot | gryte
+stove | komfyr
+salt | salt
+pepper | pepper
+butter | smør
+spoon | skje
+bowl | bolle
+soup | suppe
