@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Lesebok · Bilingual Reader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Cormorant+SC:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* ════════════════════════════════════════════
+   LESEBOK v3 — Warm Bookish Single-File Reader
+   Palette: aged vellum, deep walnut, ember red
+   Type: Playfair Display + EB Garamond
+════════════════════════════════════════════ */
+
+:root {
+  /* Palette */
+  --vellum:        #f6edd8;
+  --vellum-mid:    #ede2c8;
+  --vellum-shadow: #d8ccb0;
+  --walnut:        #2b1d0e;
+  --walnut-mid:    #3d2a14;
+  --walnut-light:  #5a3e22;
+  --ember:         #9b2d1f;
+  --ember-light:   #c04b38;
+  --ember-glow:    rgba(155,45,31,.12);
+  --gold:          #b8893a;
+  --gold-light:    #d4a95a;
+  --gold-faint:    rgba(184,137,58,.15);
+  --ink:           #1e1309;
+  --ink-mid:       #3b2710;
+  --ink-soft:      #6b4e2a;
+  --page-en:       #f8f2e3;
+  --page-no:       #f2ebe0;
+
+  /* Spacing */
+  --max-w: 820px;
+  --ease:  cubic-bezier(.4,0,.2,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  font-family: 'EB Garamond', Georgia, serif;
+  background: var(--walnut);
+  background-image:
+    radial-gradient(ellipse 80% 60% at 30% 10%, #3d2a14 0%, transparent 70%),
+    radial-gradient(ellipse 60% 80% at 80% 90%, #1e1309 0%, transparent 70%);
+  color: var(--ink);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── Paper texture on body ── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  opacity: .7;
+}
+
+/* ════════════════════════════════
+   HEADER / MASTHEAD
+════════════════════════════════ */
+.masthead {
+  width: 100%;
+  max-width: var(--max-w);
+  padding: 1.5rem 1.5rem .9rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 10;
+}
+
+.masthead-title {
+  font-family: 'Cormorant SC', serif;
+  font-size: clamp(1.15rem, 3vw, 1.5rem);
+  font-weight: 500;
+  letter-spacing: .18em;
+  color: var(--gold-light);
+  line-height: 1;
+  text-shadow: 0 2px 12px rgba(0,0,0,.4);
+}
+
+.masthead-sub {
+  font-family: 'EB Garamond', serif;
+  font-size: .85rem;
+  font-style: italic;
+  color: rgba(212,169,90,.55);
+  letter-spacing: .04em;
+  margin-top: .2rem;
+}
+
+/* Language toggle */
+.lang-toggle {
+  display: flex;
+  gap: .3rem;
+  align-items: center;
+}
+
+.lang-btn {
+  font-family: 'Cormorant SC', serif;
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  padding: .28rem .7rem;
+  border-radius: 20px;
+  border: 1px solid rgba(184,137,58,.3);
+  background: transparent;
+  color: rgba(212,169,90,.6);
+  cursor: pointer;
+  transition: all .18s var(--ease);
+  white-space: nowrap;
+}
+.lang-btn:hover { border-color: var(--gold); color: var(--gold-light); }
+.lang-btn.active {
+  background: var(--ember);
+  border-color: var(--ember-light);
+  color: var(--vellum);
+  box-shadow: 0 2px 12px rgba(155,45,31,.35);
+}
+
+.masthead-rule {
+  width: 100%;
+  max-width: var(--max-w);
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold) 20%, var(--gold) 80%, transparent);
+  opacity: .25;
+  position: relative;
+  z-index: 10;
+}
+
+/* ════════════════════════════════
+   MAIN CONTENT AREA
+════════════════════════════════ */
+main {
+  width: 100%;
+  max-width: var(--max-w);
+  flex: 1;
+  padding: 1.75rem 1.25rem 5rem;
+  position: relative;
+  z-index: 5;
+}
+
+/* ════════════════════════════════
+   LIBRARY SCREEN
+════════════════════════════════ */
+#screen-library { display: block; }
+#screen-reader  { display: none; }
+
+.library-eyebrow {
+  font-family: 'Cormorant SC', serif;
+  font-size: .7rem;
+  letter-spacing: .2em;
+  color: var(--gold);
+  opacity: .6;
+  margin-bottom: .5rem;
+}
+
+.library-heading {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  font-weight: 700;
+  color: var(--vellum);
+  line-height: 1.15;
+  margin-bottom: .4rem;
+  text-shadow: 0 2px 16px rgba(0,0,0,.5);
+}
+
+.library-byline {
+  font-family: 'EB Garamond', serif;
+  font-size: 1.05rem;
+  font-style: italic;
+  color: rgba(212,169,90,.55);
+  margin-bottom: 2.5rem;
+}
+
+/* Story cards */
+.story-list {
+  display: flex;
+  flex-direction: column;
+  gap: .85rem;
+  margin-bottom: 2.5rem;
+}
+
+.story-card {
+  background: var(--vellum);
+  border-radius: 6px;
+  padding: 1.2rem 1.4rem 1.2rem 1.6rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  border-left: 4px solid var(--gold);
+  box-shadow:
+    0 2px 8px rgba(0,0,0,.2),
+    0 8px 24px rgba(0,0,0,.15),
+    inset 0 1px 0 rgba(255,255,255,.6);
+  transition: transform .18s var(--ease), box-shadow .18s var(--ease), border-color .18s;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle aged paper lines */
+.story-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg, transparent, transparent 23px,
+    rgba(100,70,30,.035) 23px, rgba(100,70,30,.035) 24px
+  );
+  pointer-events: none;
+}
+
+.story-card:hover {
+  transform: translateY(-2px) translateX(2px);
+  box-shadow:
+    0 6px 20px rgba(0,0,0,.3),
+    0 16px 40px rgba(0,0,0,.2),
+    inset 0 1px 0 rgba(255,255,255,.6);
+  border-color: var(--ember);
+}
+
+.story-card-emoji {
+  font-size: 1.75rem;
+  flex-shrink: 0;
+  line-height: 1;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,.2));
+}
+
+.story-card-body { flex: 1; min-width: 0; }
+
+.story-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.3;
+  margin-bottom: .15rem;
+}
+
+.story-card-alt {
+  font-family: 'EB Garamond', serif;
+  font-size: .9rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.story-card-meta {
+  font-family: 'Cormorant SC', serif;
+  font-size: .62rem;
+  letter-spacing: .1em;
+  color: var(--gold);
+  margin-top: .3rem;
+}
+
+.story-card-arrow {
+  font-size: 1.3rem;
+  color: var(--gold);
+  opacity: .4;
+  transition: opacity .18s, transform .18s;
+  flex-shrink: 0;
+}
+.story-card:hover .story-card-arrow { opacity: .85; transform: translateX(4px); }
+
+/* ── Drop zone ── */
+.drop-section {
+  border: 1.5px dashed rgba(184,137,58,.3);
+  border-radius: 8px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all .2s var(--ease);
+  background: rgba(246,237,216,.03);
+}
+.drop-section:hover,
+.drop-section.drag-over {
+  border-color: var(--gold);
+  background: var(--gold-faint);
+}
+
+.drop-icon { font-size: 2rem; margin-bottom: .6rem; opacity: .7; }
+
+.drop-title {
+  font-family: 'Playfair Display', serif;
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--gold-light);
+  margin-bottom: .35rem;
+}
+
+.drop-hint {
+  font-family: 'EB Garamond', serif;
+  font-size: .9rem;
+  font-style: italic;
+  color: rgba(212,169,90,.5);
+  line-height: 1.6;
+}
+
+.drop-hint code {
+  font-family: 'EB Garamond', monospace;
+  background: rgba(184,137,58,.12);
+  padding: .1rem .35rem;
+  border-radius: 3px;
+  color: var(--gold);
+  font-style: normal;
+  font-size: .85rem;
+}
+
+#file-input { display: none; }
+
+.library-note {
+  margin-top: 1.5rem;
+  padding: 1rem 1.25rem;
+  border-radius: 5px;
+  background: rgba(184,137,58,.07);
+  border-left: 3px solid rgba(184,137,58,.3);
+  font-family: 'EB Garamond', serif;
+  font-size: .9rem;
+  font-style: italic;
+  color: rgba(212,169,90,.55);
+  line-height: 1.65;
+}
+
+.library-note strong {
+  font-style: normal;
+  color: var(--gold-light);
+  font-weight: 500;
+}
+
+/* ════════════════════════════════
+   READER SCREEN
+════════════════════════════════ */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font-family: 'Cormorant SC', serif;
+  font-size: .68rem;
+  letter-spacing: .14em;
+  color: rgba(212,169,90,.5);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: .3rem 0;
+  margin-bottom: 1.6rem;
+  transition: color .18s;
+}
+.back-btn:hover { color: var(--gold-light); }
+.back-btn svg { opacity: .6; }
+
+/* Story title area */
+.reader-header {
+  margin-bottom: 2rem;
+}
+
+.reader-eyebrow {
+  font-family: 'Cormorant SC', serif;
+  font-size: .65rem;
+  letter-spacing: .2em;
+  color: var(--ember);
+  opacity: .8;
+  margin-bottom: .4rem;
+}
+
+.reader-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.4rem, 4.5vw, 2rem);
+  font-weight: 700;
+  color: var(--vellum);
+  line-height: 1.2;
+  text-shadow: 0 2px 16px rgba(0,0,0,.5);
+  margin-bottom: .2rem;
+}
+
+.reader-title-no {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(.95rem, 2.5vw, 1.15rem);
+  font-weight: 400;
+  font-style: italic;
+  color: rgba(212,169,90,.5);
+}
+
+/* Scene tab row */
+.scene-tabs {
+  display: flex;
+  gap: .4rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 1.6rem;
+}
+
+.scene-tab {
+  font-family: 'Cormorant SC', serif;
+  font-size: .65rem;
+  letter-spacing: .1em;
+  padding: .3rem .7rem;
+  border-radius: 20px;
+  border: 1px solid rgba(184,137,58,.22);
+  background: rgba(246,237,216,.04);
+  color: rgba(212,169,90,.5);
+  cursor: pointer;
+  transition: all .15s var(--ease);
+  white-space: nowrap;
+}
+.scene-tab:hover { border-color: var(--gold); color: var(--gold-light); }
+.scene-tab.active {
+  background: var(--ember);
+  border-color: var(--ember-light);
+  color: var(--vellum);
+}
+
+.scene-nav-arrows {
+  margin-left: auto;
+  display: flex;
+  gap: .35rem;
+}
+
+.arrow-btn {
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(184,137,58,.25);
+  background: transparent;
+  color: rgba(212,169,90,.5);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all .15s var(--ease);
+  line-height: 1;
+}
+.arrow-btn:hover:not(:disabled) {
+  border-color: var(--gold);
+  color: var(--gold-light);
+  background: var(--gold-faint);
+}
+.arrow-btn:disabled { opacity: .2; cursor: not-allowed; }
+
+/* ── The open book spread ── */
+.book-spread {
+  background: var(--page-en);
+  border-radius: 4px;
+  box-shadow:
+    0 4px 6px rgba(0,0,0,.12),
+    0 12px 32px rgba(0,0,0,.28),
+    0 32px 64px rgba(0,0,0,.2),
+    inset 0 1px 0 rgba(255,255,255,.7);
+  position: relative;
+  overflow: hidden;
+  animation: pageIn .3s var(--ease) both;
+}
+
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(8px) scale(.99); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Paper lines on the spread */
+.book-spread::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg, transparent, transparent 27px,
+    rgba(100,70,30,.04) 27px, rgba(100,70,30,.04) 28px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Scene title bar */
+.scene-header {
+  padding: 1.25rem 1.75rem .9rem;
+  border-bottom: 1px solid var(--vellum-shadow);
+  display: flex;
+  align-items: baseline;
+  gap: .85rem;
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(to bottom, rgba(255,255,255,.25), transparent);
+}
+
+.scene-emoji {
+  font-size: 1.4rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.scene-title-en {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.scene-title-no {
+  font-family: 'EB Garamond', serif;
+  font-size: .95rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.scene-title-sep {
+  color: var(--vellum-shadow);
+  font-weight: 300;
+}
+
+/* Column headers inside spread */
+.spread-col-labels {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  padding: .65rem 0 0;
+  position: relative;
+  z-index: 1;
+}
+
+.spread-col-label {
+  font-family: 'Cormorant SC', serif;
+  font-size: .62rem;
+  letter-spacing: .16em;
+  text-align: center;
+  padding-bottom: .4rem;
+  border-bottom: 1px solid var(--vellum-shadow);
+}
+
+.col-label-en { color: var(--ember); }
+.col-label-no { color: var(--gold); }
+.col-label-divider { background: var(--vellum-shadow); }
+
+/* Sentence pairs */
+.sentences-grid {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+
+.sent-pair {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  border-bottom: 1px solid rgba(100,70,30,.06);
+  transition: background .12s;
+}
+
+.sent-pair:last-child { border-bottom: none; }
+
+.sent-pair:hover { background: rgba(155,45,31,.04); }
+
+.sent-en,
+.sent-no {
+  padding: .8rem 1.75rem;
+  font-family: 'EB Garamond', serif;
+  font-size: clamp(1rem, 2.2vw, 1.13rem);
+  line-height: 1.7;
+  color: var(--ink-mid);
+}
+
+.sent-no {
+  font-style: italic;
+  color: var(--ink-soft);
+  background: rgba(0,0,0,.015);
+}
+
+.sent-divider {
+  background: var(--vellum-shadow);
+  opacity: .5;
+}
+
+/* Spread footer: page numbers */
+.spread-footer {
+  padding: .7rem 1.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--vellum-shadow);
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(to top, rgba(255,255,255,.2), transparent);
+}
+
+.pg-num {
+  font-family: 'Cormorant SC', serif;
+  font-size: .65rem;
+  letter-spacing: .12em;
+  color: var(--ink-soft);
+  opacity: .5;
+}
+
+.pg-ornament {
+  font-size: .9rem;
+  color: var(--gold);
+  opacity: .3;
+}
+
+/* ── Single language modes ── */
+body.mode-english .sent-no,
+body.mode-english .col-label-no,
+body.mode-english .col-label-divider {
+  display: none;
+}
+body.mode-english .sent-pair,
+body.mode-english .spread-col-labels {
+  grid-template-columns: 1fr;
+}
+body.mode-english .sent-divider { display: none; }
+
+body.mode-norwegian .sent-en,
+body.mode-norwegian .col-label-en,
+body.mode-norwegian .col-label-divider {
+  display: none;
+}
+body.mode-norwegian .sent-pair,
+body.mode-norwegian .spread-col-labels {
+  grid-template-columns: 1fr;
+}
+body.mode-norwegian .sent-no { font-style: normal; }
+body.mode-norwegian .sent-divider { display: none; }
+
+/* ── Vocab card ── */
+.vocab-card {
+  margin-top: 1.25rem;
+  background: var(--vellum-mid);
+  border-radius: 4px;
+  padding: 1.25rem 1.75rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.6);
+  position: relative;
+  overflow: hidden;
+}
+
+.vocab-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg, transparent, transparent 23px,
+    rgba(100,70,30,.04) 23px, rgba(100,70,30,.04) 24px
+  );
+  pointer-events: none;
+}
+
+.vocab-title {
+  font-family: 'Playfair Display', serif;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--ember);
+  letter-spacing: .04em;
+  margin-bottom: 1rem;
+  padding-bottom: .5rem;
+  border-bottom: 1px solid var(--vellum-shadow);
+  position: relative;
+  z-index: 1;
+}
+
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+  gap: .35rem;
+  position: relative;
+  z-index: 1;
+}
+
+.vocab-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .4rem;
+  padding: .25rem .45rem;
+  border-radius: 3px;
+  background: rgba(255,255,255,.35);
+  font-size: .88rem;
+}
+
+.v-en { font-family: 'EB Garamond', serif; color: var(--ink-mid); }
+.v-no { font-family: 'EB Garamond', serif; font-style: italic; color: var(--ink-soft); font-size: .83rem; }
+
+/* Progress strip */
+.progress-track {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: rgba(0,0,0,.3);
+  z-index: 200;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--ember), var(--gold));
+  transition: width .35s var(--ease);
+  width: 0%;
+}
+
+/* ─ Responsive ─ */
+@media (max-width: 580px) {
+  .sent-pair {
+    grid-template-columns: 1fr !important;
+  }
+  .spread-col-labels {
+    grid-template-columns: 1fr !important;
+  }
+  .sent-divider,
+  .col-label-divider { display: none !important; }
+
+  .sent-en {
+    padding: .65rem 1.25rem .35rem;
+    border-bottom: 1px dashed rgba(100,70,30,.12);
+  }
+  .sent-no {
+    padding: .35rem 1.25rem .65rem;
+  }
+  .sent-en, .sent-no { font-size: 1.05rem; }
+
+  .scene-header { padding: 1rem 1.25rem .75rem; }
+  .spread-footer { padding: .6rem 1.25rem; }
+  .spread-col-label { text-align: left; padding-left: 1.25rem; }
+}
+
+@media (max-width: 400px) {
+  .lang-btn span { display: none; }
+  .masthead-title { font-size: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- Masthead -->
+<div class="masthead">
+  <div>
+    <div class="masthead-title">Lesebok</div>
+    <div class="masthead-sub">Bilingual Story Reader</div>
+  </div>
+  <div class="lang-toggle">
+    <button class="lang-btn active" data-mode="bilingual">🇺🇸🇳🇴 <span>Both</span></button>
+    <button class="lang-btn" data-mode="english">🇺🇸 <span>EN</span></button>
+    <button class="lang-btn" data-mode="norwegian">🇳🇴 <span>NO</span></button>
+  </div>
+</div>
+<div class="masthead-rule"></div>
+
+<main>
+
+  <!-- ══ LIBRARY ══ -->
+  <section id="screen-library">
+    <div class="library-eyebrow">Story Library</div>
+    <h1 class="library-heading">Choose a Story</h1>
+    <p class="library-byline">Select a story below, or load your own .txt file</p>
+
+    <div class="story-list" id="story-list">
+      <!-- Filled by JS -->
+    </div>
+
+    <!-- Drop / load zone -->
+    <div class="drop-section" id="drop-zone">
+      <input type="file" id="file-input" accept=".txt" multiple/>
+      <div class="drop-icon">📄</div>
+      <div class="drop-title">Load a Story File</div>
+      <div class="drop-hint">
+        Drop a <code>.txt</code> file here or click to browse.<br/>
+        See the format guide in the note below.
+      </div>
+    </div>
+
+    <div class="library-note">
+      <strong>Story file format:</strong> Each <code>.txt</code> story file uses simple labels.
+      Start with <code>TITLE_EN:</code> and <code>TITLE_NO:</code>, then divide into scenes with
+      <code>SCENE: English Name | Norsk Navn | 🌿</code>, and write lines as
+      <code>EN:</code> or <code>NO:</code> pairs. A demo story is built in so you can explore right away.
+    </div>
+  </section>
+
+  <!-- ══ READER ══ -->
+  <section id="screen-reader">
+    <button class="back-btn" id="back-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to Library
+    </button>
+
+    <div class="reader-header">
+      <div class="reader-eyebrow">Now Reading</div>
+      <div class="reader-title" id="reader-title-en"></div>
+      <div class="reader-title-no" id="reader-title-no"></div>
+    </div>
+
+    <!-- Scene tabs + arrows -->
+    <div class="scene-tabs" id="scene-tabs">
+      <div class="scene-nav-arrows">
+        <button class="arrow-btn" id="btn-prev" disabled>‹</button>
+        <button class="arrow-btn" id="btn-next">›</button>
+      </div>
+    </div>
+
+    <!-- The open spread -->
+    <div class="book-spread" id="book-spread">
+
+      <!-- Column headers -->
+      <div class="spread-col-labels">
+        <div class="spread-col-label col-label-en">🇺🇸 English</div>
+        <div class="col-label-divider"></div>
+        <div class="spread-col-label col-label-no">🇳🇴 Norsk</div>
+      </div>
+
+      <!-- Scene title -->
+      <div class="scene-header" id="scene-header">
+        <div class="scene-emoji" id="scene-emoji"></div>
+        <div>
+          <span class="scene-title-en" id="scene-title-en"></span>
+          <span class="scene-title-sep"> · </span>
+          <span class="scene-title-no" id="scene-title-no"></span>
+        </div>
+      </div>
+
+      <!-- Sentence pairs -->
+      <div class="sentences-grid" id="sentences-grid"></div>
+
+      <!-- Page number footer -->
+      <div class="spread-footer">
+        <div class="pg-num" id="pg-left"></div>
+        <div class="pg-ornament">✦</div>
+        <div class="pg-num" id="pg-right"></div>
+      </div>
+    </div>
+
+    <!-- Vocab (last scene only) -->
+    <div class="vocab-card" id="vocab-card" style="display:none">
+      <div class="vocab-title">Key Words · Nøkkelord</div>
+      <div class="vocab-grid" id="vocab-grid"></div>
+    </div>
+
+  </section>
+</main>
+
+<!-- Progress -->
+<div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+
+<script>
+/* ══════════════════════════════════════════════
+   STORY FORMAT PARSER
+   Parses a plain .txt story file into a story object.
+
+   File format:
+   ─────────────────────────────────────
+   TITLE_EN: A Simple Morning with Mia
+   TITLE_NO: En Enkel Morgen med Mia
+   EMOJI: 🌅
+   AUTHOR: (optional)
+
+   SCENE: Waking Up | Å våkne | ☀️
+   EN: Mia is a young girl.
+   NO: Mia er en ung jente.
+   EN: She lives in a small house with her dog, Max.
+   NO: Hun bor i et lite hus med hunden sin, Max.
+
+   SCENE: Brushing Her Teeth | Pusser tennene | 🪥
+   EN: Mia walks to the bathroom and brushes her teeth.
+   NO: Mia går til badet og pusser tennene.
+
+   VOCAB:
+   morning | morgen
+   window | vindu
+   teeth | tenner
+   ─────────────────────────────────────
+══════════════════════════════════════════════ */
+
+function parseTxtStory(text, filename) {
+  const lines = text.split(/\r?\n/);
+  const story = {
+    id: filename || ('story-' + Date.now()),
+    titleEn: 'Untitled Story',
+    titleNo:  'Uten tittel',
+    emoji:    '📖',
+    author:   '',
+    scenes:   [],
+    vocab:    [],
+    source:   'file'
+  };
+
+  let currentScene = null;
+  let inVocab = false;
+  let pendingEn = null;
+
+  for (let raw of lines) {
+    const line = raw.trim();
+    if (!line) continue;
+
+    if (line.startsWith('TITLE_EN:')) {
+      story.titleEn = line.slice(9).trim();
+      continue;
+    }
+    if (line.startsWith('TITLE_NO:')) {
+      story.titleNo = line.slice(9).trim();
+      continue;
+    }
+    if (line.startsWith('EMOJI:')) {
+      story.emoji = line.slice(6).trim();
+      continue;
+    }
+    if (line.startsWith('AUTHOR:')) {
+      story.author = line.slice(7).trim();
+      continue;
+    }
+    if (line.toUpperCase().startsWith('VOCAB:')) {
+      inVocab = true;
+      currentScene = null;
+      continue;
+    }
+    if (line.startsWith('SCENE:')) {
+      inVocab = false;
+      pendingEn = null;
+      const parts = line.slice(6).split('|').map(s => s.trim());
+      currentScene = {
+        labelEn: parts[0] || 'Scene',
+        labelNo:  parts[1] || parts[0] || 'Scene',
+        emoji:    parts[2] || '📖',
+        pairs:    []
+      };
+      story.scenes.push(currentScene);
+      continue;
+    }
+
+    if (inVocab) {
+      const parts = line.split('|').map(s => s.trim());
+      if (parts.length >= 2) {
+        story.vocab.push({ en: parts[0], no: parts[1] });
+      }
+      continue;
+    }
+
+    if (currentScene) {
+      if (line.startsWith('EN:')) {
+        pendingEn = line.slice(3).trim();
+      } else if (line.startsWith('NO:') && pendingEn !== null) {
+        currentScene.pairs.push({ en: pendingEn, no: line.slice(3).trim() });
+        pendingEn = null;
+      }
+    }
+  }
+
+  return story;
+}
+
+/* ══════════════════════════════════════════════
+   BUILT-IN DEMO STORY
+══════════════════════════════════════════════ */
+const DEMO_TXT = `
+TITLE_EN: A Simple Morning with Mia
+TITLE_NO: En Enkel Morgen med Mia
+EMOJI: 🌅
+
+SCENE: Waking Up | Å våkne | ☀️
+EN: Mia is a young girl.
+NO: Mia er en ung jente.
+EN: She lives in a small house with her dog, Max.
+NO: Hun bor i et lite hus med hunden sin, Max.
+EN: One morning, Mia wakes up when the sun shines through her window.
+NO: En morgen våkner Mia når solen skinner inn gjennom vinduet.
+EN: She sits up in bed, stretches her arms, and smiles.
+NO: Hun setter seg opp i sengen, strekker armene og smiler.
+
+SCENE: Brushing Her Teeth | Pusser tennene | 🪥
+EN: Mia walks to the bathroom and brushes her teeth.
+NO: Mia går til badet og pusser tennene.
+EN: The water is cool, and the mint toothpaste tastes fresh.
+NO: Vannet er kjølig, og tannkremen med mynte smaker friskt.
+EN: After that, Mia goes to the living room.
+NO: Etter det går Mia til stuen.
+EN: She sees Max waiting for her.
+NO: Hun ser Max som venter på henne.
+
+SCENE: Playing with Max | Leker med Max | 🐾
+EN: Max wags his tail and runs in a happy circle.
+NO: Max logrer med halen og løper i en glad sirkel.
+EN: Mia laughs and plays with him for a few minutes.
+NO: Mia ler og leker med ham i noen minutter.
+EN: Then Mia goes to the kitchen to make breakfast.
+NO: Så går Mia til kjøkkenet for å lage frokost.
+
+SCENE: Making Breakfast | Lager frokost | 🍎
+EN: She makes toast, cuts an apple, and pours a glass of milk.
+NO: Hun lager toast, skjærer opp et eple og heller et glass melk.
+EN: She sits at the table and eats slowly.
+NO: Hun setter seg ved bordet og spiser rolig.
+EN: Max rests by her chair.
+NO: Max hviler ved stolen hennes.
+
+SCENE: Going for a Walk | Går en tur | 👟
+EN: When breakfast is done, Mia puts on her shoes and goes for a walk.
+NO: Når frokosten er ferdig, tar Mia på seg skoene og går en tur.
+EN: Outside, she sees birds in the trees and hears them sing.
+NO: Ute ser hun fugler i trærne og hører dem synge.
+EN: She also sees cars moving along the road and people driving to work.
+NO: Hun ser også biler som kjører på veien og mennesker som kjører til jobb.
+
+SCENE: The Little Store | Den lille butikken | 🏪
+EN: Mia walks to a small store near her house.
+NO: Mia går til en liten butikk nær huset sitt.
+EN: Inside the store, she buys something fun: a bright red ball for Max.
+NO: Inne i butikken kjøper hun noe morsomt: en klar rød ball til Max.
+EN: Then she walks back home with the ball in her bag.
+NO: Så går hun hjem igjen med ballen i vesken sin.
+
+SCENE: Back Home | Tilbake hjemme | 🏠
+EN: At home, Mia takes the ball out and puts it in the house.
+NO: Hjemme tar Mia ballen ut og legger den i huset.
+EN: She smiles at Max.
+NO: Hun smiler til Max.
+EN: It is a good morning, and Mia feels happy.
+NO: Det er en god morgen, og Mia føler seg glad.
+
+VOCAB:
+morning | morgen
+window | vindu
+teeth | tenner
+toothpaste | tannkrem
+tail | hale
+breakfast | frokost
+apple | eple
+milk | melk
+shoes | sko
+birds | fugler
+trees | trær
+road | vei
+store | butikk
+ball | ball
+bag | veske
+happy | glad
+smile | smil
+house | hus
+`.trim();
+
+/* ══════════════════════════════════════════════
+   APP STATE
+══════════════════════════════════════════════ */
+const app = {
+  stories:      [parseTxtStory(DEMO_TXT, 'mia-morning')],
+  active:       null,
+  sceneIndex:   0,
+  mode:         'bilingual'
+};
+
+/* ══════════════════════════════════════════════
+   LIBRARY RENDER
+══════════════════════════════════════════════ */
+function renderLibrary() {
+  const list = document.getElementById('story-list');
+  list.innerHTML = '';
+  app.stories.forEach(story => {
+    const card = document.createElement('div');
+    card.className = 'story-card';
+    card.innerHTML = `
+      <div class="story-card-emoji">${story.emoji}</div>
+      <div class="story-card-body">
+        <div class="story-card-title">${story.titleEn}</div>
+        <div class="story-card-alt">${story.titleNo}</div>
+        <div class="story-card-meta">${story.scenes.length} scenes · EN / NO</div>
+      </div>
+      <div class="story-card-arrow">›</div>
+    `;
+    card.addEventListener('click', () => openReader(story));
+    list.appendChild(card);
+  });
+}
+
+/* ══════════════════════════════════════════════
+   READER
+══════════════════════════════════════════════ */
+function openReader(story) {
+  app.active = story;
+  app.sceneIndex = 0;
+
+  document.getElementById('screen-library').style.display = 'none';
+  document.getElementById('screen-reader').style.display = 'block';
+
+  document.getElementById('reader-title-en').textContent = story.titleEn;
+  document.getElementById('reader-title-no').textContent = story.titleNo;
+
+  buildSceneTabs(story);
+  renderScene(0);
+}
+
+function buildSceneTabs(story) {
+  const tabsEl = document.getElementById('scene-tabs');
+  // Remove old tabs (keep arrows)
+  const arrows = tabsEl.querySelector('.scene-nav-arrows');
+  tabsEl.innerHTML = '';
+  story.scenes.forEach((scene, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'scene-tab' + (i === 0 ? ' active' : '');
+    btn.textContent = `${scene.emoji} ${i + 1}`;
+    btn.title = scene.labelEn;
+    btn.addEventListener('click', () => renderScene(i));
+    tabsEl.appendChild(btn);
+  });
+  tabsEl.appendChild(arrows);
+}
+
+function renderScene(idx) {
+  const story = app.active;
+  app.sceneIndex = idx;
+  const scene = story.scenes[idx];
+
+  // Update tabs
+  document.querySelectorAll('.scene-tab').forEach((t, i) =>
+    t.classList.toggle('active', i === idx));
+
+  // Scene header
+  document.getElementById('scene-emoji').textContent   = scene.emoji;
+  document.getElementById('scene-title-en').textContent = scene.labelEn;
+  document.getElementById('scene-title-no').textContent = scene.labelNo;
+
+  // Sentence pairs
+  const grid = document.getElementById('sentences-grid');
+  grid.innerHTML = '';
+  scene.pairs.forEach(pair => {
+    const row = document.createElement('div');
+    row.className = 'sent-pair';
+    row.innerHTML = `
+      <div class="sent-en">${pair.en}</div>
+      <div class="sent-divider"></div>
+      <div class="sent-no">${pair.no}</div>
+    `;
+    grid.appendChild(row);
+  });
+
+  // Page numbers
+  const pn = (idx + 1) * 2;
+  document.getElementById('pg-left').textContent  = pn;
+  document.getElementById('pg-right').textContent = pn + 1;
+
+  // Vocab (last scene)
+  const vocabCard = document.getElementById('vocab-card');
+  if (idx === story.scenes.length - 1 && story.vocab.length) {
+    vocabCard.style.display = 'block';
+    document.getElementById('vocab-grid').innerHTML = story.vocab
+      .map(v => `<div class="vocab-item"><span class="v-en">${v.en}</span><span class="v-no">${v.no}</span></div>`)
+      .join('');
+  } else {
+    vocabCard.style.display = 'none';
+  }
+
+  // Trigger re-animation
+  const spread = document.getElementById('book-spread');
+  spread.style.animation = 'none';
+  spread.offsetHeight; // reflow
+  spread.style.animation = '';
+
+  // Progress
+  document.getElementById('progress-fill').style.width =
+    ((idx + 1) / story.scenes.length * 100) + '%';
+
+  // Arrow states
+  document.getElementById('btn-prev').disabled = idx === 0;
+  document.getElementById('btn-next').disabled = idx === story.scenes.length - 1;
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ══════════════════════════════════════════════
+   LANGUAGE MODE
+══════════════════════════════════════════════ */
+function setMode(mode) {
+  app.mode = mode;
+  document.body.className = document.body.className.replace(/mode-\w+/g, '').trim();
+  if (mode !== 'bilingual') document.body.classList.add('mode-' + mode);
+  document.querySelectorAll('.lang-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.mode === mode));
+}
+
+/* ══════════════════════════════════════════════
+   FILE LOADING
+══════════════════════════════════════════════ */
+function loadTxtFile(file) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    const story = parseTxtStory(e.target.result, file.name.replace(/\.txt$/i, ''));
+    const existing = app.stories.findIndex(s => s.id === story.id);
+    if (existing >= 0) app.stories[existing] = story;
+    else app.stories.push(story);
+    renderLibrary();
+  };
+  reader.readAsText(file, 'utf-8');
+}
+
+/* ══════════════════════════════════════════════
+   EVENTS
+══════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  renderLibrary();
+
+  // Language buttons
+  document.querySelectorAll('.lang-btn').forEach(btn =>
+    btn.addEventListener('click', () => setMode(btn.dataset.mode)));
+
+  // Back button
+  document.getElementById('back-btn').addEventListener('click', () => {
+    document.getElementById('screen-reader').style.display = 'none';
+    document.getElementById('screen-library').style.display = 'block';
+    document.getElementById('progress-fill').style.width = '0%';
+    app.active = null;
+  });
+
+  // Scene arrows
+  document.getElementById('btn-prev').addEventListener('click', () => {
+    if (app.sceneIndex > 0) renderScene(app.sceneIndex - 1);
+  });
+  document.getElementById('btn-next').addEventListener('click', () => {
+    if (app.active && app.sceneIndex < app.active.scenes.length - 1)
+      renderScene(app.sceneIndex + 1);
+  });
+
+  // File input
+  const dropZone  = document.getElementById('drop-zone');
+  const fileInput = document.getElementById('file-input');
+
+  dropZone.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', e =>
+    Array.from(e.target.files).forEach(loadTxtFile));
+
+  dropZone.addEventListener('dragover', e => {
+    e.preventDefault(); dropZone.classList.add('drag-over');
+  });
+  dropZone.addEventListener('dragleave', () =>
+    dropZone.classList.remove('drag-over'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault(); dropZone.classList.remove('drag-over');
+    Array.from(e.dataTransfer.files)
+      .filter(f => f.name.endsWith('.txt'))
+      .forEach(loadTxtFile);
+  });
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (!app.active) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      if (app.sceneIndex < app.active.scenes.length - 1) renderScene(app.sceneIndex + 1);
+    }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      if (app.sceneIndex > 0) renderScene(app.sceneIndex - 1);
+    }
+  });
+
+  // Swipe
+  let tx = 0;
+  document.addEventListener('touchstart', e => { tx = e.changedTouches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', e => {
+    if (!app.active) return;
+    const dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 55) {
+      if (dx < 0 && app.sceneIndex < app.active.scenes.length - 1) renderScene(app.sceneIndex + 1);
+      if (dx > 0 && app.sceneIndex > 0) renderScene(app.sceneIndex - 1);
+    }
+  }, { passive: true });
+});
+</script>
+</body>
+</html>
